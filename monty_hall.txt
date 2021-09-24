@@ -3,23 +3,18 @@ let attempts = 1000
 
 for (let i = 0; i < attempts; i++) {
     let doors = [
-        { position: "left", hasCar: false },
-        { position: "mid", hasCar: true },
-        { position: "right", hasCar: false }
+        { position: "left", hasCar: false, chosen: false, open: false },
+        { position: "mid", hasCar: true, chosen: false, open: false },
+        { position: "right", hasCar: false, chosen: false, open: false }
     ]
-    let choice = Math.floor(Math.random() * 3)
-    let doorPositionThatYouChose = doors[choice].position
-    let doorThatWillBeRemoved = {}
-    if (doors[choice].hasCar) {
-        let remainingDoors = doors.filter(door => { return !door.hasCar })
-        doorThatWillBeRemoved = doors.indexOf(remainingDoors[Math.floor(Math.random() * 2)])
-    }
-    else {
-        let remainingDoors = doors.filter(door => { return !door.hasCar && doors.indexOf(door) !== choice })
-        doorThatWillBeRemoved = doors.indexOf(remainingDoors[0])
-    }
-    doors.splice(doorThatWillBeRemoved, 1)
-    let changedDoor = doors.filter(door => { return door.position !== doorPositionThatYouChose })[0]
+    const choice = Math.floor(Math.random() * 3)
+    doors[choice].chosen = true
+    
+    const remainingDoors = doors.filter(door => { return !door.chosen && !door.hasCar })
+    const doorThatWillBeOpened = doors.indexOf(remainingDoors[Math.floor(Math.random() * remainingDoors.length)])
+    doors[doorThatWillBeOpened].open = true
+    
+    const changedDoor = doors.filter(door => { return !door.chosen && !door.open })[0]
     winTime += changedDoor.hasCar
 }
 
