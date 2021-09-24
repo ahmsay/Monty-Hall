@@ -1,21 +1,41 @@
 let winTime = 0
-let attempts = 1000
+const attempts = 1000
+
+const doors = [
+  { position: "left", hasCar: false, chosen: false, open: false },
+  { position: "mid", hasCar: true, chosen: false, open: false },
+  { position: "right", hasCar: false, chosen: false, open: false }
+]
+
+function chooseADoor() {
+	const choice = Math.floor(Math.random() * 3)
+  doors[choice].chosen = true
+}
+
+function openADoorThatIsNotChosenAndHasNoCar() {
+  const remainingDoors = doors.filter(door => { return !door.chosen && !door.hasCar })
+  const randomDoorIndex = Math.floor(Math.random() * remainingDoors.length)
+  const doorThatWillBeOpened = doors.indexOf(remainingDoors[randomDoorIndex])
+  doors[doorThatWillBeOpened].open = true
+}
+
+function chooseTheDoorThatIsNotOpened() {
+  return doors.filter(door => { return !door.chosen && !door.open })[0]
+}
+
+function resetDoors(doors) {
+  doors.forEach(door => {
+    door.chosen = false
+    door.open = false
+  })
+}
 
 for (let i = 0; i < attempts; i++) {
-    let doors = [
-        { position: "left", hasCar: false, chosen: false, open: false },
-        { position: "mid", hasCar: true, chosen: false, open: false },
-        { position: "right", hasCar: false, chosen: false, open: false }
-    ]
-    const choice = Math.floor(Math.random() * 3)
-    doors[choice].chosen = true
-    
-    const remainingDoors = doors.filter(door => { return !door.chosen && !door.hasCar })
-    const doorThatWillBeOpened = doors.indexOf(remainingDoors[Math.floor(Math.random() * remainingDoors.length)])
-    doors[doorThatWillBeOpened].open = true
-    
-    const changedDoor = doors.filter(door => { return !door.chosen && !door.open })[0]
-    winTime += changedDoor.hasCar
+  chooseADoor()
+  openADoorThatIsNotChosenAndHasNoCar()
+  const changedDoor = chooseTheDoorThatIsNotOpened()
+  winTime += changedDoor.hasCar
+  resetDoors(doors)
 }
 
 console.log("You won", winTime, "of", attempts, "attempts.")
