@@ -14,8 +14,8 @@ function chooseADoor() {
 
 function openADoorThatIsNotChosenAndHasNoCar() {
   const remainingDoors = doors.filter(door => { return !door.chosen && !door.hasCar })
-  const randomDoorIndex = Math.floor(Math.random() * remainingDoors.length)
-  const doorThatWillBeOpened = doors.indexOf(remainingDoors[randomDoorIndex])
+  const randomDoor = Math.floor(Math.random() * remainingDoors.length)
+  const doorThatWillBeOpened = doors.indexOf(remainingDoors[randomDoor])
   doors[doorThatWillBeOpened].open = true
 }
 
