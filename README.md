@@ -12,7 +12,7 @@ const doors = [
 ]
 
 function chooseADoor() {
-	const choice = Math.floor(Math.random() * 3)
+  const choice = Math.floor(Math.random() * doors.length)
   doors[choice].chosen = true
 }
 
