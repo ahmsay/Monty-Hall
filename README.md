@@ -1,7 +1,7 @@
 # Monty-Hall
 A demo where you can try the Monty Hall problem. Copy and paste the code to your browser's devtools to try it out !
 
-`
+```
 let winTime = 0
 const attempts = 1000
 
@@ -43,4 +43,4 @@ for (let i = 0; i < attempts; i++) {
 }
 
 console.log("You won", winTime, "of", attempts, "attempts.")
-`
+```
